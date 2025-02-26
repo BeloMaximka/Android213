@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Andrioid-213</string>
 
+    <!-- region Calculator -->
     <string name="calc_tv_title">Калькулятор</string>
     <string name="calc_btn_0">0</string>
     <string name="calc_btn_1">1</string>
@@ -26,5 +27,15 @@
     <string name="calc_btn_equal">=</string>
     <string name="calc_btn_dot">.</string>
     <string name="calc_btn_pm">+/-</string>
+    <!-- endregion -->
+
+    <!-- region Game -->
+    <string name="game_tv_title">2048</string>
+    <string name="game_tv_hint">Join the numbers and get to the 2048 title!</string>
+    <string name="game_tv_new">NEW</string>
+    <string name="game_tv_undo">UNDO</string>
+    <string name="game_tv_score">SCORE</string>
+    <string name="game_tv_best">BEST</string>
+    <!-- endregion -->
 
 </resources>

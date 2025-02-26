@@ -6,11 +6,29 @@
     <color name="main_layout_bg">#CAE4E2</color>
     <color name="main_btn_bg">#575408</color>
 
+    <!-- region Calculator -->
     <color name="calc_layout_bg">#202020</color>
     <color name="calc_btn_func_bg">#323232</color>
     <color name="calc_btn_digit_bg">#3B3B3B</color>
     <color name="calc_btn_equal_bg">#4BC0FD</color>
     <color name="calc_tv_res_fg">#FDFDFD</color>
     <color name="calc_tv_exp_fg">#A5A5A5</color>
+    <!-- endregion -->
+
+    <!-- region Game -->
+    <color name="game_tv_background">#fbf8ef</color>
+    <color name="game_tv_field">#a49381</color>
+    <color name="game_tv_cell">#bfafa0</color>
+    <color name="game_tv_title">#eccc5f</color>
+    <color name="game_tv_stats">#3d3a33</color>
+    <color name="game_tv_button">#f75e3e</color>
+    <color name="game_tv_text_dark">#776e65</color>
+    <color name="game_tv_2">#eee4da</color>
+    <color name="game_tv_4">#eee1ce</color>
+    <color name="game_tv_8">#f4b27e</color>
+    <color name="game_tv_16">#f6976b</color>
+    <color name="game_tv_32">#f77e69</color>
+    <color name="game_tv_64">#f76148</color>
+    <!-- endregion -->
 
 </resources>
