@@ -48,13 +48,14 @@
                     android:gravity="center"
                     android:text="@string/game_tv_score"/>
                 <TextView
+                    android:id="@+id/game_score"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="23sp"
                     android:textStyle="bold"
                     android:gravity="center"
-                    android:text="512"/>
+                    android:text="0"/>
             </LinearLayout>
 
             <Button
@@ -87,13 +88,14 @@
                     android:gravity="center"
                     android:text="@string/game_tv_best"/>
                 <TextView
+                    android:id="@+id/game_best_score"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="23sp"
                     android:textStyle="bold"
                     android:gravity="center"
-                    android:text="69.6k"/>
+                    android:text="0"/>
             </LinearLayout>
             <Button
                 android:layout_width="match_parent"
@@ -116,6 +118,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
             <GridLayout
+                android:id="@+id/game_layout_field"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginEnd="0dp"
@@ -130,22 +133,54 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_gravity="center"
                 android:columnCount="4">
-                <TextView style="@style/game_cell_4"/>
-                <TextView style="@style/game_cell_2"/>
-                <TextView style="@style/game_cell"/>
-                <TextView style="@style/game_cell"/>
-                <TextView style="@style/game_cell_8"/>
-                <TextView style="@style/game_cell_4"/>
-                <TextView style="@style/game_cell"/>
-                <TextView style="@style/game_cell"/>
-                <TextView style="@style/game_cell_32"/>
-                <TextView style="@style/game_cell_8"/>
-                <TextView style="@style/game_cell_4"/>
-                <TextView style="@style/game_cell_2"/>
-                <TextView style="@style/game_cell_64"/>
-                <TextView style="@style/game_cell_16"/>
-                <TextView style="@style/game_cell_8"/>
-                <TextView style="@style/game_cell_4"/>
+                <TextView
+                    android:id="@+id/game_cell_00"
+                    style="@style/game_cell"/>
+                <TextView
+                    android:id="@+id/game_cell_01"
+                    style="@style/game_cell_2"/>
+                <TextView
+                    android:id="@+id/game_cell_02"
+                    style="@style/game_cell_4"/>
+                <TextView
+                    android:id="@+id/game_cell_03"
+                    style="@style/game_cell_8"/>
+                <TextView
+                    android:id="@+id/game_cell_10"
+                    style="@style/game_cell_2"/>
+                <TextView
+                    android:id="@+id/game_cell_11"
+                    style="@style/game_cell_4"/>
+                <TextView
+                    android:id="@+id/game_cell_12"
+                    style="@style/game_cell_8"/>
+                <TextView
+                    android:id="@+id/game_cell_13"
+                    style="@style/game_cell_16"/>
+                <TextView
+                    android:id="@+id/game_cell_20"
+                    style="@style/game_cell_4"/>
+                <TextView
+                    android:id="@+id/game_cell_21"
+                    style="@style/game_cell_8"/>
+                <TextView
+                    android:id="@+id/game_cell_22"
+                    style="@style/game_cell_16"/>
+                <TextView
+                    android:id="@+id/game_cell_23"
+                    style="@style/game_cell_32"/>
+                <TextView
+                    android:id="@+id/game_cell_30"
+                    style="@style/game_cell_8"/>
+                <TextView
+                    android:id="@+id/game_cell_31"
+                    style="@style/game_cell_16"/>
+                <TextView
+                    android:id="@+id/game_cell_32"
+                    style="@style/game_cell_32"/>
+                <TextView
+                    android:id="@+id/game_cell_33"
+                    style="@style/game_cell_64"/>
             </GridLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

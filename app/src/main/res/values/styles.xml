@@ -31,12 +31,13 @@
     <!-- region Game -->
     <style name="game_shape">
         <item name="backgroundTint">@null</item>
+        <item name="fontFamily">@font/clear_sans</item>
     </style>
 
     <style name="game_btn" parent="game_shape">
         <item name="android:background">@drawable/game_btn</item>
         <item name="backgroundTint">@null</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">23sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
