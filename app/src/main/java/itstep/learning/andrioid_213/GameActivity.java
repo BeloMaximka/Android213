@@ -5,6 +5,8 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -26,11 +28,15 @@ public class GameActivity extends AppCompatActivity {
     TextView tvScore;
     TextView tvBestScore;
 
+    private long oldScore = 0;
     private long score = 0;
     private long bestScore = 0;
     private final int N = 4;
     private final long[][] tiles = new long[N][N];
     private final TextView[][] tvTiles = new TextView[N][N];
+
+    private Animation spawnAnimation;
+    private Animation collapseAnimation;
 
     @SuppressLint("ClickableViewAccessibility")
     @SuppressWarnings("ClickableViewAccessVisibility")
@@ -46,6 +52,8 @@ public class GameActivity extends AppCompatActivity {
         });
         LinearLayout mainLayout = findViewById((R.id.game_layout_main));
         findViewById(R.id.game_new_btn).setOnClickListener(this::startNewGame);
+        spawnAnimation = AnimationUtils.loadAnimation(this, R.anim.game_tile_spawn);
+        collapseAnimation = AnimationUtils.loadAnimation(this, R.anim.game_tile_collapse);
         tvScore = findViewById(R.id.game_score);
         tvBestScore = findViewById(R.id.game_best_score);
         initTvTiles();
@@ -99,6 +107,7 @@ public class GameActivity extends AppCompatActivity {
             for(int j = N - 1; j > 0; j--) {
                 if(tiles[i][j] == tiles[i][j - 1] && tiles[i][j] != -1) {
                     tiles[i][j] = tiles[i][j] * 2;
+                    tvTiles[i][j].setTag(collapseAnimation);;
                     tiles[i][j -1] = -1;
                     score += tiles[i][j];
                     res = true;
@@ -136,6 +145,7 @@ public class GameActivity extends AppCompatActivity {
             for(int j = 0; j < N - 1; j++) {
                 if(tiles[i][j] == tiles[i][j + 1] && tiles[i][j] != -1) {
                     tiles[i][j] = tiles[i][j] * 2;
+                    tvTiles[i][j].setTag(collapseAnimation);;
                     tiles[i][j + 1] = -1;
                     score += tiles[i][j];
                     res = true;
@@ -173,6 +183,7 @@ public class GameActivity extends AppCompatActivity {
             for(int j = N - 1; j > 0; j--) {
                 if(tiles[j][i] == tiles[j - 1][i] && tiles[j][i] != -1) {
                     tiles[j][i] = tiles[j][i] * 2;
+                    tvTiles[i][j].setTag(collapseAnimation);;
                     tiles[j - 1][i] = -1;
                     score += tiles[j][i];
                     res = true;
@@ -210,6 +221,7 @@ public class GameActivity extends AppCompatActivity {
             for(int j = 0; j < N - 1; j++) {
                 if(tiles[j][i] == tiles[j + 1][i] && tiles[j][i] != -1) {
                     tiles[j][i] = tiles[j][i] * 2;
+                    tvTiles[j][i].setTag(collapseAnimation);;
                     tiles[j + 1][i] = -1;
                     score += tiles[j][i];
                     res = true;
@@ -249,6 +261,11 @@ public class GameActivity extends AppCompatActivity {
         tvTiles[x][y].setTextColor(style.getTextColor());
         tvTiles[x][y].setText(style.getText());
         tvTiles[x][y].setTextSize(TypedValue.COMPLEX_UNIT_SP, style.getTextSize());
+        Object animTag = tvTiles[x][y].getTag();
+        if(animTag instanceof Animation) {
+            tvTiles[x][y].startAnimation((Animation) animTag);
+            tvTiles[x][y].setTag(null);
+        }
     }
 
     private void updateField() {
@@ -287,14 +304,21 @@ public class GameActivity extends AppCompatActivity {
         int i = k / N;
         int j = k % N;
         tiles[i][j] = random.nextInt(10) == 0 ? 4 : 2;
+        tvTiles[i][j].setTag(spawnAnimation);;
         return true;
     }
 
     private void updateScore() {
+        if(score == oldScore) {
+            return;
+        }
         tvScore.setText(String.valueOf(score));
+        tvScore.startAnimation(collapseAnimation);
+        oldScore = score;
         if(score > bestScore) {
             bestScore = score;
             tvBestScore.setText(String.valueOf(bestScore));
+            tvBestScore.startAnimation(collapseAnimation);
         }
     }
 
