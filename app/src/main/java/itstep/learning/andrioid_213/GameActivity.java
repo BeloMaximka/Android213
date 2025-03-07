@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -26,6 +27,7 @@ public class GameActivity extends AppCompatActivity {
     TextView tvBestScore;
 
     private long score = 0;
+    private long bestScore = 0;
     private final int N = 4;
     private final long[][] tiles = new long[N][N];
     private final TextView[][] tvTiles = new TextView[N][N];
@@ -43,10 +45,11 @@ public class GameActivity extends AppCompatActivity {
             return insets;
         });
         LinearLayout mainLayout = findViewById((R.id.game_layout_main));
+        findViewById(R.id.game_new_btn).setOnClickListener(this::startNewGame);
         tvScore = findViewById(R.id.game_score);
         tvBestScore = findViewById(R.id.game_best_score);
         initTvTiles();
-        startNewGame();
+        startNewGame(null);
 
         mainLayout.post(() -> {
 
@@ -254,6 +257,7 @@ public class GameActivity extends AppCompatActivity {
                 updateTile(i, j, tiles[i][j]);
             }
         }
+        updateScore();
     }
 
     private void initTvTiles() {
@@ -286,10 +290,16 @@ public class GameActivity extends AppCompatActivity {
         return true;
     }
 
-    private void startNewGame() {
-        score = 0;
+    private void updateScore() {
         tvScore.setText(String.valueOf(score));
-        tvBestScore.setText(String.valueOf(score));
+        if(score > bestScore) {
+            bestScore = score;
+            tvBestScore.setText(String.valueOf(bestScore));
+        }
+    }
+
+    private void startNewGame(View view) {
+        score = 0;
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 tiles[i][j] = -1;

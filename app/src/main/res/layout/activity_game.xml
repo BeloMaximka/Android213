@@ -59,6 +59,7 @@
             </LinearLayout>
 
             <Button
+                android:id="@+id/game_new_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/game_btn"
