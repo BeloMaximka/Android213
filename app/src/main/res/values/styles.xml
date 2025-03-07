@@ -53,41 +53,5 @@
         <item name="android:textStyle">bold</item>
         <item name="android:padding">0dp</item>
     </style>
-
-    <style name="game_cell_2" parent="game_cell">
-        <item name="android:backgroundTint">@color/game_tv_2</item>
-        <item name="android:textColor">@color/game_tv_text_dark</item>
-        <item name="android:text">2</item>
-    </style>
-
-    <style name="game_cell_4" parent="game_cell">
-        <item name="android:backgroundTint">@color/game_tv_4</item>
-        <item name="android:textColor">@color/game_tv_text_dark</item>
-        <item name="android:text">4</item>
-    </style>
-
-    <style name="game_cell_8" parent="game_cell">
-        <item name="android:backgroundTint">@color/game_tv_8</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:text">8</item>
-    </style>
-
-    <style name="game_cell_16" parent="game_cell">
-        <item name="android:backgroundTint">@color/game_tv_16</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:text">16</item>
-    </style>
-
-    <style name="game_cell_32" parent="game_cell">
-        <item name="android:backgroundTint">@color/game_tv_32</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:text">32</item>
-    </style>
-
-    <style name="game_cell_64" parent="game_cell">
-        <item name="android:backgroundTint">@color/game_tv_64</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:text">64</item>
-    </style>
     <!-- endregion -->
 </resources>

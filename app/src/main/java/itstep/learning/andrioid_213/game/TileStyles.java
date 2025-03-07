@@ -14,5 +14,11 @@ public class TileStyles {
             new TileStyle(-1194415, -1, 32, "512"),
             new TileStyle(-1128381, -1, 24, "1024"),
             new TileStyle(-1261010, -1, 24, "2048"),
+            new TileStyle(-4880716, -1, 24, "4096"),
+            new TileStyle(-5742165, -1, 24, "8192"),
+            new TileStyle(-6272861, -1, 24, "16384"),
+            new TileStyle(-8388480, -1, 24, "32768"),
+            new TileStyle(-10485690, -1, 24, "65536"),
+            new TileStyle(-7633181, -1, 20, "131072"),
     };
 }
