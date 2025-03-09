@@ -13,6 +13,13 @@ public class CalcActivity extends AppCompatActivity {
     private boolean isResultCalculated = false;
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("EXPRESSION_KEY", tvExpression.getText().toString());
+        outState.putString("RESULT_KEY", tvResult.getText().toString());
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calc);
@@ -50,6 +57,13 @@ public class CalcActivity extends AppCompatActivity {
         findViewById(R.id.calc_btn_inv).setOnClickListener(v -> applyInverse());
         findViewById(R.id.calc_btn_sqr).setOnClickListener(v -> applySquare());
         findViewById(R.id.calc_btn_sqrt).setOnClickListener(v -> applySqrt());
+
+        if (savedInstanceState != null) {
+            String savedExpression = savedInstanceState.getString("EXPRESSION_KEY");
+            expression.append(savedExpression);
+            tvExpression.setText(savedInstanceState.getString("EXPRESSION_KEY"));
+            tvResult.setText(savedInstanceState.getString("RESULT_KEY"));
+        }
     }
 
     private void appendDigit(String digit) {
