@@ -1,6 +1,7 @@
 package itstep.learning.andrioid_213;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import itstep.learning.andrioid_213.game.SavedState;
 import itstep.learning.andrioid_213.game.TileStyle;
 import itstep.learning.andrioid_213.game.TileStyles;
 
@@ -40,11 +42,14 @@ public class GameActivity extends AppCompatActivity {
     private long score = 0;
     private long bestScore = 0;
     private final int N = 4;
-    private final long[][] tiles = new long[N][N];
+    private long[][] tiles = new long[N][N];
     private final TextView[][] tvTiles = new TextView[N][N];
 
     private Animation spawnAnimation;
     private Animation collapseAnimation;
+
+    private SavedState savedState;
+    private View undoBtn;
 
     @SuppressLint("ClickableViewAccessibility")
     @SuppressWarnings("ClickableViewAccessVisibility")
@@ -60,6 +65,7 @@ public class GameActivity extends AppCompatActivity {
         });
         LinearLayout mainLayout = findViewById((R.id.game_layout_main));
         findViewById(R.id.game_new_btn).setOnClickListener(this::startNewGame);
+        undoBtn = findViewById(R.id.game_undo_btn);
         spawnAnimation = AnimationUtils.loadAnimation(this, R.anim.game_tile_spawn);
         collapseAnimation = AnimationUtils.loadAnimation(this, R.anim.game_tile_collapse);
         tvScore = findViewById(R.id.game_score);
@@ -76,37 +82,103 @@ public class GameActivity extends AppCompatActivity {
                 new OnSwipeListener(GameActivity.this) {
                     @Override
                     public void onSwipeBottom() {
+                        saveState();
                         if(moveBottom()) {
                             spawnTile();
+                        }
+                        else {
+                            verifyLoseCondition();
                         }
                         updateField();
                     }
 
                     @Override
                     public void onSwipeLeft() {
+                        saveState();
                         if(moveLeft()) {
                             spawnTile();
+                        }
+                        else {
+                            verifyLoseCondition();
                         }
                         updateField();
                     }
 
                     @Override
                     public void onSwipeRight() {
+                        saveState();
                         if(moveRight()) {
                             spawnTile();
+                        }
+                        else {
+                            verifyLoseCondition();
                         }
                         updateField();
                     }
 
                     @Override
                     public void onSwipeTop() {
+                        saveState();
                         if(moveUp()) {
                             spawnTile();
+                        }
+                        else {
+                            verifyLoseCondition();
                         }
                         updateField();
                     }
                 }
         );
+    }
+
+    private void verifyLoseCondition() {
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                if (tiles[i][j] == -1) {
+                    return;
+                }
+                if (j < N - 1 && tiles[i][j] == tiles[i][j + 1]) {
+                    return;
+                }
+                if (i < N - 1 && tiles[i][j] == tiles[i + 1][j]) {
+                    showGameOverDialog();
+                    return;
+                }
+            }
+        }
+        showGameOverDialog();
+    }
+
+    private void showGameOverDialog() {
+        new AlertDialog
+                .Builder(this, android.R.style.Theme_Material_Dialog)
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .setTitle("You lost!")
+                .setMessage("You have no moves left! Press OK to start a new game")
+                .setNeutralButton("OK", (dlg, btn) -> startNewGame(null))
+                .setCancelable(false)
+                .show();
+    }
+
+    private void saveState() {
+        long[][] copedTiles = new long[tiles.length][];
+        for(int i = 0; i < tiles.length; i++) {
+            copedTiles[i] = tiles[i].clone();
+        }
+        savedState = new SavedState(copedTiles, score, bestScore);
+        undoBtn.setOnClickListener(this::loadState);
+        undoBtn.setEnabled(true);
+    }
+
+    private void loadState(View view) {
+        undoBtn.setEnabled(false);
+        tiles = savedState.getTiles();
+        score = savedState.getScore();;
+        bestScore = savedState.getBestScore();
+        undoBtn.setEnabled(false);
+        updateField();
+        tvScore.setText(String.valueOf(score));
+        tvBestScore.setText(String.valueOf(bestScore));
     }
 
     private void saveBestScore() {
@@ -355,6 +427,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void startNewGame(View view) {
+        undoBtn.setEnabled(false);
         score = 0;
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
