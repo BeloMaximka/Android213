@@ -1,8 +1,10 @@
 package itstep.learning.andrioid_213;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.Animation;
@@ -16,6 +18,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -25,6 +32,7 @@ import itstep.learning.andrioid_213.game.TileStyles;
 
 public class GameActivity extends AppCompatActivity {
     private final Random random = new Random();
+    private final String bestScoreFilename = "score.best";
     TextView tvScore;
     TextView tvBestScore;
 
@@ -56,6 +64,7 @@ public class GameActivity extends AppCompatActivity {
         collapseAnimation = AnimationUtils.loadAnimation(this, R.anim.game_tile_collapse);
         tvScore = findViewById(R.id.game_score);
         tvBestScore = findViewById(R.id.game_best_score);
+        loadBestScore();
         initTvTiles();
         startNewGame(null);
 
@@ -98,6 +107,28 @@ public class GameActivity extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    private void saveBestScore() {
+        try(FileOutputStream fos = openFileOutput(bestScoreFilename,Context.MODE_PRIVATE)) {
+            DataOutputStream writer = new DataOutputStream(fos);
+            writer.writeLong(bestScore);;
+            writer.flush();
+        }
+        catch (IOException ex) {
+            Log.w("GameActivity::saveBestScore", ex.getMessage() + " ");
+        }
+    }
+
+    private void loadBestScore() {
+        try(FileInputStream fis = openFileInput(bestScoreFilename)) {
+            DataInputStream reader = new DataInputStream(fis);
+            bestScore = reader.readLong();
+            tvBestScore.setText(String.valueOf(bestScore));
+        }
+        catch (IOException ex) {
+            Log.w("GameActivity::loadBestScore", ex.getMessage() + " ");
+        }
     }
 
     // region Moves
@@ -319,6 +350,7 @@ public class GameActivity extends AppCompatActivity {
             bestScore = score;
             tvBestScore.setText(String.valueOf(bestScore));
             tvBestScore.startAnimation(collapseAnimation);
+            saveBestScore();
         }
     }
 
