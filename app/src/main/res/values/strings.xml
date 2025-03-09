@@ -27,6 +27,7 @@
     <string name="calc_btn_equal">=</string>
     <string name="calc_btn_dot">.</string>
     <string name="calc_btn_pm">+/-</string>
+    <string name="calc_error">Помилка</string>
     <!-- endregion -->
 
     <!-- region Game -->
