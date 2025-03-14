@@ -39,4 +39,9 @@
     <string name="game_tv_best">BEST</string>
     <!-- endregion -->
 
+    <!-- region Rate -->
+    <string name="rate_tv_load_fail">Nbu rates load fail</string>
+    <string name="rate_detailed_info">Повна назва: %1$s\nСкорочена назва: %2$s\nКод за r030: %3$d\nКурс на %4$s: 1 %2$s = %5$f HRN</string>
+    <!-- endregion -->
+
 </resources>

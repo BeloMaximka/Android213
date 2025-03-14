@@ -17,15 +17,8 @@ public class MainActivity extends AppCompatActivity {
         //    v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
         //    return insets;
         //});
-        findViewById(R.id.buttonGame).setOnClickListener(this::OnButtonGameClick);
-        findViewById(R.id.buttonCalc).setOnClickListener(this::OnButtonCalcClick);
-    }
-
-    private void OnButtonCalcClick(View view) {
-        startActivity(new Intent(MainActivity.this, CalcActivity.class));
-    }
-
-    private void OnButtonGameClick(View view) {
-        startActivity(new Intent(MainActivity.this, GameActivity.class));
+        findViewById(R.id.buttonGame).setOnClickListener(v -> startActivity(new Intent(MainActivity.this, GameActivity.class)));
+        findViewById(R.id.buttonCalc).setOnClickListener(v -> startActivity(new Intent(MainActivity.this, CalcActivity.class)));
+        findViewById(R.id.buttonRate).setOnClickListener(v -> startActivity(new Intent(MainActivity.this, RateActivity.class)));
     }
 }
