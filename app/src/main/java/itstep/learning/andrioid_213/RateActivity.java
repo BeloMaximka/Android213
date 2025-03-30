@@ -4,7 +4,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -38,10 +41,14 @@ public class RateActivity extends AppCompatActivity {
     private final String cacheFilename = "nbu_rates_cache.json";
     private static List<NbuRate> cachedNbuRates;
     private TextView tvTmp;
+
+    private EditText etSearch;
     private LinearLayout ratesContainer;
     private List<NbuRate> nbuRates;
 
     private Handler handler = new Handler();
+
+    private String searchString = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +61,24 @@ public class RateActivity extends AppCompatActivity {
             return insets;
         });
         tvTmp = findViewById(R.id.temp);
+        etSearch = findViewById(R.id.rate_search);
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                searchString = charSequence.toString().toLowerCase();
+                showRates();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
         ratesContainer = findViewById(R.id.rates_container);
         if(cachedNbuRates == null) {
             try(FileInputStream fis = openFileInput(cacheFilename)) {
@@ -81,7 +106,6 @@ public class RateActivity extends AppCompatActivity {
 
         handler.postDelayed(this::periodicAction, 5000);
     }
-
 
     private void periodicAction() {
         if(nbuRates != null && isRatesActual()) {
@@ -129,7 +153,11 @@ public class RateActivity extends AppCompatActivity {
     }
 
     private void showRates() {
+        ratesContainer.removeAllViews();
         for (NbuRate rate: nbuRates) {
+            if(!rate.search(searchString)) {
+                continue;
+            }
             NbuRateChipView tv = new NbuRateChipView(this, rate);
             tv.setOnClickListener(v -> openRateInfoDialog(rate));
             ratesContainer.addView(tv);

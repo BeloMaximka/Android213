@@ -14,7 +14,7 @@ public class NbuRateChipView extends androidx.appcompat.widget.AppCompatTextView
     public NbuRateChipView(Context context, NbuRate nbuRate) {
         super(context);
         setPadding(24, 24, 24, 24);
-        setText(nbuRate.getText());
+        setText(nbuRate.getCc() + " " + nbuRate.getRate());
 
         Drawable rateBg = AppCompatResources.getDrawable(context.getApplicationContext(),  R.drawable.rate_shape);
         setBackground(rateBg);

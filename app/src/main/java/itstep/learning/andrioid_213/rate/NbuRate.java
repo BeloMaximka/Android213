@@ -44,7 +44,7 @@ public class NbuRate {
     }
 
     public String getText() {
-        return cc + " " + rate;
+        return text;
     }
 
     public void setText(String text) {
@@ -73,5 +73,9 @@ public class NbuRate {
 
     public void setExchangeDate(Date exchangeDate) {
         this.exchangeDate = exchangeDate;
+    }
+
+    public boolean search(String searchText) {
+        return text.toLowerCase().contains(searchText) || cc.toLowerCase().contains(searchText);
     }
 }

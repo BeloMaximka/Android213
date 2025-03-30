@@ -7,21 +7,43 @@
     android:layout_height="match_parent"
     tools:context=".RateActivity">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:id="@+id/rates_container"
-            android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/search_label"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:flow_verticalGap="8dp"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/temp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+            android:padding="8dp"
+            android:text="Пошук"/>
+        <EditText
+            android:id="@+id/rate_search"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:padding="8dp"
+            android:labelFor="@id/search_label"
+            android:hint="CZK"
+            android:lines="1"
+            android:layout_marginBottom="32dp"/>
 
-        </LinearLayout>
-    </ScrollView>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/rates_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:flow_verticalGap="8dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/temp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
