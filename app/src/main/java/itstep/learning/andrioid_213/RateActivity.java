@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import itstep.learning.andrioid_213.rate.NbuRate;
+import itstep.learning.andrioid_213.rate.NbuRateChipView;
 
 public class RateActivity extends AppCompatActivity {
     private final String nbuUrl = "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json";
@@ -65,8 +66,7 @@ public class RateActivity extends AppCompatActivity {
 
     private void showRates() {
         for (NbuRate rate: nbuRates) {
-            TextView tv = new TextView(this);
-            tv.setText(rate.getText());
+            NbuRateChipView tv = new NbuRateChipView(this, rate);
             tv.setOnClickListener(v -> openRateInfoDialog(rate));
             ratesContainer.addView(tv);
         }

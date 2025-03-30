@@ -31,4 +31,8 @@
     <color name="game_tv_64">#f76148</color>
     <!-- endregion -->
 
+    <!-- region Rates -->
+    <color name="rate_chip_bg">#ecdfcc</color>
+    <!-- endregion -->
+
 </resources>

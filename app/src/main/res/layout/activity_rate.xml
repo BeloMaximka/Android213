@@ -7,15 +7,21 @@
     android:layout_height="match_parent"
     tools:context=".RateActivity">
 
-    <LinearLayout
-        android:id="@+id/rates_container"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/temp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/rates_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:flow_verticalGap="8dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/temp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

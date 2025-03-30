@@ -44,7 +44,7 @@ public class NbuRate {
     }
 
     public String getText() {
-        return text;
+        return cc + " " + rate;
     }
 
     public void setText(String text) {
