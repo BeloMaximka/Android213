@@ -44,4 +44,13 @@
     <string name="rate_detailed_info">Повна назва: %1$s\nСкорочена назва: %2$s\nКод за r030: %3$d\nКурс на %4$s: 1 %2$s = %5$f HRN</string>
     <!-- endregion -->
 
+    <!-- region Chat -->
+    <string name="chat_tv_author">Author</string>
+    <string name="chat_iv_bell_description">Placeholder</string>
+    <string name="chat_tv_message">Text</string>
+    <string name="main_btn_chat">Chat</string>
+    <string name="chat_tv_message_hint">Message</string>
+    <string name="chat_msg_empty_auth">Введіть своє ім\'я</string>
+    <string name="chat_msg_empty_message">Введіть повідомлення</string>
+    <!-- endregion -->
 </resources>

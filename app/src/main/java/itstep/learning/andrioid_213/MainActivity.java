@@ -20,5 +20,6 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.buttonGame).setOnClickListener(v -> startActivity(new Intent(MainActivity.this, GameActivity.class)));
         findViewById(R.id.buttonCalc).setOnClickListener(v -> startActivity(new Intent(MainActivity.this, CalcActivity.class)));
         findViewById(R.id.buttonRate).setOnClickListener(v -> startActivity(new Intent(MainActivity.this, RateActivity.class)));
+        findViewById(R.id.buttonChat).setOnClickListener(v -> startActivity(new Intent(MainActivity.this, ChatActivity.class)));
     }
 }
