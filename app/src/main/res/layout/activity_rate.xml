@@ -30,19 +30,18 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <LinearLayout
-                android:id="@+id/rates_container"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rates_rv_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:flow_verticalGap="8dp"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/temp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
+                android:orientation="vertical"
+                android:contentDescription="Rates"/>
         </ScrollView>
+        <TextView
+            android:id="@+id/temp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 

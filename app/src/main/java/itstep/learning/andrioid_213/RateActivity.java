@@ -8,7 +8,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -16,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,7 +35,7 @@ import java.util.Date;
 import java.util.List;
 
 import itstep.learning.andrioid_213.rate.NbuRate;
-import itstep.learning.andrioid_213.rate.NbuRateChipView;
+import itstep.learning.andrioid_213.rate.RateAdapter;
 
 public class RateActivity extends AppCompatActivity {
     private final String nbuUrl = "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json";
@@ -43,8 +44,11 @@ public class RateActivity extends AppCompatActivity {
     private TextView tvTmp;
 
     private EditText etSearch;
-    private LinearLayout ratesContainer;
     private List<NbuRate> nbuRates;
+
+    private List<NbuRate> filteredRates;
+
+    private RateAdapter rateAdapter;
 
     private Handler handler = new Handler();
 
@@ -53,13 +57,22 @@ public class RateActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_rate);
+        EdgeToEdge.enable(this);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        nbuRates = new ArrayList<>();
+        filteredRates = new ArrayList<>();
+
+        RecyclerView rvContainer = findViewById(R.id.rates_rv_container);
+        rvContainer.setLayoutManager(new LinearLayoutManager(this));
+        rateAdapter = new RateAdapter(filteredRates);
+        rvContainer.setAdapter(rateAdapter);
+
         tvTmp = findViewById(R.id.temp);
         etSearch = findViewById(R.id.rate_search);
         etSearch.addTextChangedListener(new TextWatcher() {
@@ -79,7 +92,6 @@ public class RateActivity extends AppCompatActivity {
 
             }
         });
-        ratesContainer = findViewById(R.id.rates_container);
         if(cachedNbuRates == null) {
             try(FileInputStream fis = openFileInput(cacheFilename)) {
                 Log.d("onCreate","Nbu got cache from file.");
@@ -140,9 +152,10 @@ public class RateActivity extends AppCompatActivity {
         try  {
             JSONArray arr = new JSONArray(jsonText);
             int len = arr.length();
-            nbuRates = new ArrayList<>();
             for (int i = 0; i < len; i++) {
-                nbuRates.add(NbuRate.fromJsonObject((arr.getJSONObject(i))));
+                NbuRate rate = NbuRate.fromJsonObject((arr.getJSONObject(i)));
+                nbuRates.add(rate);
+                filteredRates.add(rate);
             }
             cachedNbuRates = nbuRates;
         }
@@ -153,14 +166,13 @@ public class RateActivity extends AppCompatActivity {
     }
 
     private void showRates() {
-        ratesContainer.removeAllViews();
+        filteredRates.clear();
         for (NbuRate rate: nbuRates) {
             if(!rate.search(searchString)) {
                 continue;
             }
-            NbuRateChipView tv = new NbuRateChipView(this, rate);
-            tv.setOnClickListener(v -> openRateInfoDialog(rate));
-            ratesContainer.addView(tv);
+            tvTmp.setOnClickListener(v -> openRateInfoDialog(rate));
+            filteredRates.add(rate);
         }
     }
 
