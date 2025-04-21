@@ -19,8 +19,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import itstep.learning.andrioid_213.chat.ChatMessage;
 import itstep.learning.andrioid_213.chat.ChatMessageAdapter;
@@ -57,7 +64,7 @@ public class ChatActivity extends AppCompatActivity {
             JSONObject jsonObject = new JSONObject(text);
             JSONArray arr = jsonObject.getJSONArray("data");
             int len = arr.length();
-            for (int i = 0; i < len; i ++) {
+            for (int i = 0; i < len; i++) {
                 chatMessages.add(ChatMessage.fromJsonObject(arr.getJSONObject(i)));
             }
             runOnUiThread(() -> chatMessageAdapter.notifyItemRangeInserted(0, len));
@@ -68,15 +75,62 @@ public class ChatActivity extends AppCompatActivity {
 
     private void sendMessage(View view) {
         String author = etAuthor.getText().toString();
-        if(author.isBlank()) {
+        if (author.isBlank()) {
             Toast.makeText(this, R.string.chat_msg_empty_auth, Toast.LENGTH_SHORT).show();
             return;
         }
         String message = etMessage.getText().toString();
-        if(message.isBlank()) {
+        if (message.isBlank()) {
             Toast.makeText(this, R.string.chat_msg_empty_message, Toast.LENGTH_SHORT).show();
             return;
         }
     }
 
+    public static boolean postForm(String url, Map<String, String> data) {
+        try {
+            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+            connection.setChunkedStreamingMode(0);
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Accept", "application/json");
+            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            String charsetName = StandardCharsets.UTF_8.name();
+            StringBuilder stringBuilder = new StringBuilder();
+            boolean isFirst = true;
+            for (Map.Entry<String, String> entry : data.entrySet()) {
+                if (isFirst) {
+                    isFirst = false;
+                } else {
+                    stringBuilder.append('&');
+                }
+                stringBuilder.append(String.format(Locale.ROOT,
+
+                        "%s=%s",
+
+                        entry.getKey(),
+
+                        URLEncoder.encode(entry.getValue(), charsetName)
+                ));
+            }
+            String body = stringBuilder.toString();
+            OutputStream bodyStream = connection.getOutputStream();
+            bodyStream.write(body.getBytes(charsetName));
+            bodyStream.flush();
+            bodyStream.close();
+            int statusCode = connection.getResponseCode();
+            if (statusCode < 300) {
+                return true;
+            } else {
+                Log.d("postForm",
+
+                        ChatServices.readAllText(connection.getErrorStream())
+                );
+            }
+            connection.disconnect();
+        } catch (Exception ex) {
+            Log.d("postForm", ex.getCause() + " " + ex.getMessage());
+        }
+        return false;
+    }
 }
