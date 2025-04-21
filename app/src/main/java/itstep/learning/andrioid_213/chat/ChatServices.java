@@ -1,32 +1,44 @@
 package itstep.learning.andrioid_213.chat;
 
+import android.util.Log;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 public class ChatServices {
-    public static String fetchUrlText(String urlPath) throws IOException {
-        URL url;
-        try {
-            url = new URL(urlPath);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException();
-        }
 
-        try (InputStream urlStream = url.openStream()) {
-            return readAllText(urlStream);
+    public static String readAllText( InputStream inputStream ) throws IOException {
+        ByteArrayOutputStream byteBuilder = new ByteArrayOutputStream();
+        byte[] buffer = new byte[8192];
+        int len;
+        while( ( len = inputStream.read( buffer ) ) > 0 ) {
+            byteBuilder.write( buffer, 0, len );
         }
+        String charsetName = StandardCharsets.UTF_8.name();
+        String data = byteBuilder.toString( charsetName );
+        byteBuilder.close();
+        return data;
     }
 
-    public static String readAllText(InputStream inputStream) throws IOException {
-        byte[] buffer = new byte[4096];
-        ByteArrayOutputStream byteBuilder = new ByteArrayOutputStream();
-        int receivedBytes;
-        while ((receivedBytes = inputStream.read(buffer)) > 0) {
-            byteBuilder.write(buffer, 0 ,receivedBytes);
+    public static String fetchUrl( String href ) {
+        try {
+            URL url = new URL( href );
+            InputStream urlStream = url.openStream();   // GET-request
+            String data = readAllText( urlStream );
+            urlStream.close();
+            return data;
         }
-        return byteBuilder.toString();
+        catch( MalformedURLException ex ) {
+            Log.d( "Services::fetchUrl", "MalformedURLException " + ex.getMessage() );
+        }
+        catch( IOException ex ) {
+            Log.d( "Services::fetchUrl", "IOException " + ex.getMessage() );
+        }
+        return null;
+
     }
 }

@@ -45,12 +45,16 @@
     <!-- endregion -->
 
     <!-- region Chat -->
-    <string name="chat_tv_author">Author</string>
-    <string name="chat_iv_bell_description">Placeholder</string>
-    <string name="chat_tv_message">Text</string>
-    <string name="main_btn_chat">Chat</string>
-    <string name="chat_tv_message_hint">Message</string>
-    <string name="chat_msg_empty_auth">Введіть своє ім\'я</string>
-    <string name="chat_msg_empty_message">Введіть повідомлення</string>
+    <string name="chat_tv_title">Теревеньки</string>
+    <string name="chat_tv_author">Автор:</string>
+    <string name="chat_author_hint">Ваш нік у чаті</string>
+    <string name="chat_author_remember">Зберегти</string>
+    <string name="chat_send_hint">Надіслати повідомлення</string>
+    <string name="chat_message_hint">Введіть повідомлення</string>
+    <string name="chat_content_hint">Останні повідомлення</string>
+    <string name="chat_msg_no_author">Введіть ваш нік</string>
+    <string name="chat_msg_no_text">Введіть повідомлення</string>
+    <string name="chat_msg_no_send">Надсилання зупинене</string>
+    <string name="chat_msg_no_send_btn">Зрозуміло</string>
     <!-- endregion -->
 </resources>

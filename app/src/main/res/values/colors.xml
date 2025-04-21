@@ -33,6 +33,8 @@
 
     <!-- region Rates -->
     <color name="rate_chip_bg">#ecdfcc</color>
+    <color name="rates_layout_bg">#E7DCAD</color>
+    <color name="rates_text_fg">#091C81</color>
     <!-- endregion -->
 
 </resources>
